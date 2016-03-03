@@ -269,6 +269,11 @@ var Chart = {
             if (_.isNull(self.chart)) {
                 // We haven't built the chart yet, so JUST. DO. IT!
                 self.buildChart();
+                
+                // Dispatch an event listener to parent on selection change
+                google.visualization.events.addListener(self.wrapper, 'select', function () {
+                   self.$dispatch('select', self.wrapper.getChart().getSelection());
+                });
             } else {
                 // Chart already exists, just update the data
                 self.updateDataTable();
